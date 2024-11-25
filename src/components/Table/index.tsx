@@ -84,6 +84,16 @@ export function Table() {
     },
   ];
 
+  function formatDate(rawDate: string) {
+    const date = new Date(rawDate);
+    const formatter = new Intl.DateTimeFormat("pt-BR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+    return formatter.format(date);
+  }
+
   return (
     <TableContainer>
       <TableHeaderContainer>
@@ -128,7 +138,7 @@ export function Table() {
                 Data de admissão
               </TableListDataText>
               <TableListDataText textAlign="right">
-                {item.admission_date}
+                {formatDate(item.admission_date)}
               </TableListDataText>
               <TableListDataText
                 fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
