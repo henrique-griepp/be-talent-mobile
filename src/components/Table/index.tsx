@@ -15,12 +15,14 @@ import {
 } from "./styles";
 import { FlatList } from "react-native";
 import { useState } from "react";
+import { TeamSearchComponent } from "../TeamSearch";
 
 export function Table() {
   const { TYPOGRAPHY } = useTheme();
   const [isOpenItems, setIsOpenItems] = useState<{ [key: number]: boolean }>(
     {},
   );
+  const [search, setSearch] = useState("");
 
   const DATA = [
     {
@@ -107,6 +109,10 @@ export function Table() {
     return `+${ddi} (${ddd}) ${firstPart}-${secondPart}`;
   }
 
+  function OnSearchInputChanged(searchText: string) {
+    setSearch(searchText);
+  }
+
   function handleAccordion(id: number) {
     setIsOpenItems((prevState) => ({
       ...prevState,
@@ -114,67 +120,77 @@ export function Table() {
     }));
   }
 
+  const filteredData = DATA.filter((item) =>
+    item.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()),
+  );
+
   return (
-    <TableContainer>
-      <TableHeaderContainer>
-        <TableHeaderText>Foto</TableHeaderText>
-        <TableHeaderText style={{ flexGrow: 1, textAlign: "left" }}>
-          Nome
-        </TableHeaderText>
-        <TableViewIcon>
-          <CircleComponent />
-        </TableViewIcon>
-      </TableHeaderContainer>
-      <FlatList
-        data={DATA}
-        renderItem={({ item }) => (
-          <TableListContainer>
-            <TableListNames onPress={() => handleAccordion(item.id)}>
-              <AvatarComponent flexGrow={0.02} size={34} source={item.image} />
-              <TableListText
-                paddingLeft="24px"
-                style={{ flexGrow: 1, textAlign: "left" }}
-              >
-                {item.name}
-              </TableListText>
-              <TableViewIcon>
-                <StyledChevron isRotating={isOpenItems[item.id]} />
-              </TableViewIcon>
-            </TableListNames>
-            <TableListDataContainer display={isOpenItems[item.id]}>
-              <TableListDataText
-                fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
-                fontSize={TYPOGRAPHY.H2.FONT_SIZE}
-              >
-                Cargo
-              </TableListDataText>
-              <TableListDataText textAlign="right">
-                {item.job}
-              </TableListDataText>
-              <TableListDataText
-                fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
-                fontSize={TYPOGRAPHY.H2.FONT_SIZE}
-              >
-                Data de admissão
-              </TableListDataText>
-              <TableListDataText textAlign="right">
-                {formatDate(item.admission_date)}
-              </TableListDataText>
-              <TableListDataText
-                fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
-                fontSize={TYPOGRAPHY.H2.FONT_SIZE}
-              >
-                Telefone
-              </TableListDataText>
-              <TableListDataText textAlign="right">
-                {formatPhone(item.phone)}
-              </TableListDataText>
-            </TableListDataContainer>
-          </TableListContainer>
-        )}
-        keyExtractor={(item) => item.id.toString()}
-      />
-      {/* <TableListContainer>
+    <>
+      <TeamSearchComponent onChangedInput={OnSearchInputChanged} />
+      <TableContainer>
+        <TableHeaderContainer>
+          <TableHeaderText>Foto</TableHeaderText>
+          <TableHeaderText style={{ flexGrow: 1, textAlign: "left" }}>
+            Nome
+          </TableHeaderText>
+          <TableViewIcon>
+            <CircleComponent />
+          </TableViewIcon>
+        </TableHeaderContainer>
+        <FlatList
+          data={filteredData}
+          renderItem={({ item }) => (
+            <TableListContainer>
+              <TableListNames onPress={() => handleAccordion(item.id)}>
+                <AvatarComponent
+                  flexGrow={0.02}
+                  size={34}
+                  source={item.image}
+                />
+                <TableListText
+                  paddingLeft="24px"
+                  style={{ flexGrow: 1, textAlign: "left" }}
+                >
+                  {item.name}
+                </TableListText>
+                <TableViewIcon>
+                  <StyledChevron isRotating={isOpenItems[item.id]} />
+                </TableViewIcon>
+              </TableListNames>
+              <TableListDataContainer display={isOpenItems[item.id]}>
+                <TableListDataText
+                  fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
+                  fontSize={TYPOGRAPHY.H2.FONT_SIZE}
+                >
+                  Cargo
+                </TableListDataText>
+                <TableListDataText textAlign="right">
+                  {item.job}
+                </TableListDataText>
+                <TableListDataText
+                  fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
+                  fontSize={TYPOGRAPHY.H2.FONT_SIZE}
+                >
+                  Data de admissão
+                </TableListDataText>
+                <TableListDataText textAlign="right">
+                  {formatDate(item.admission_date)}
+                </TableListDataText>
+                <TableListDataText
+                  fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
+                  fontSize={TYPOGRAPHY.H2.FONT_SIZE}
+                >
+                  Telefone
+                </TableListDataText>
+                <TableListDataText textAlign="right">
+                  {formatPhone(item.phone)}
+                </TableListDataText>
+              </TableListDataContainer>
+            </TableListContainer>
+          )}
+          keyExtractor={(item) => item.id.toString()}
+        />
+        {/* <TableListContainer>
         <TableListNames>
           <AvatarComponent flexGrow={0.02} size={34} />
           <TableListText
@@ -211,7 +227,8 @@ export function Table() {
           <TableListDataText textAlign="right">texto4</TableListDataText>
         </TableListDataContainer>
       </TableListContainer> */}
-      {/* //TODO: remover  */}
-    </TableContainer>
+        {/* //TODO: remover  */}
+      </TableContainer>
+    </>
   );
 }

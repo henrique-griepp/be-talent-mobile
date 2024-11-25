@@ -7,7 +7,11 @@ import {
 import SearchIcon from "../../../assets/svg/search";
 import { useTheme } from "styled-components/native";
 
-export function TeamSearchComponent() {
+interface TeamSearchInputProps {
+  onChangedInput: (text: string) => void;
+}
+
+export function TeamSearchComponent({ onChangedInput }: TeamSearchInputProps) {
   const { COLORS } = useTheme();
 
   return (
@@ -16,6 +20,7 @@ export function TeamSearchComponent() {
       <TeamSearchInputViewText>
         <SearchIcon />
         <TeamSearchInputText
+          onChangeText={onChangedInput}
           placeholder="Pesquisar"
           placeholderTextColor={COLORS.BLACK_NEUTRAL}
         />
