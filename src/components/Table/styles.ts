@@ -1,11 +1,13 @@
-import { TextProps } from "react-native";
+import { TextProps, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
+import ChevronComponent from "../../../assets/svg/chevron";
 
-export interface ListTextProps extends TextProps {
+export interface ListProps extends TextProps {
   fontSize?: string;
   fontWeight?: string;
   textAlign?: "auto" | "left" | "right" | "center" | "justify";
   paddingLeft?: string;
+  display?: boolean;
 }
 
 const TableContainer = styled.View`
@@ -45,21 +47,22 @@ const TableListContainer = styled.View`
   padding-right: 14px;
 `;
 
-const TableListNames = styled.View`
+const TableListNames = styled(TouchableOpacity)`
   flex-direction: row;
   background-color: ${({ theme }) => theme.COLORS.WHITE_NEUTRAL};
   height: 60px;
   align-items: center;
 `;
 
-const TableListDataContainer = styled.View`
+const TableListDataContainer = styled.View<ListProps>`
   flex-direction: row;
   flex-wrap: wrap;
   width: auto;
   padding-bottom: 16px;
+  display: ${({ display }) => (display ? "flex" : "none")};
 `;
 
-const TableListDataText = styled.Text<ListTextProps>`
+const TableListDataText = styled.Text<ListProps>`
   width: 50%;
   font-family: ${({ theme }) => theme.TYPOGRAPHY.FONT_FAMILY};
   color: ${({ theme }) => theme.COLORS.BLACK_NEUTRAL};
@@ -71,9 +74,10 @@ const TableListDataText = styled.Text<ListTextProps>`
   border-color: ${({ theme }) => theme.COLORS.GRAY_10_NEUTRAL};
   border-style: dashed;
   margin-bottom: 8px;
+  display: ${({ display }) => (display ? "none" : "flex")};
 `;
 
-const TableListText = styled.Text<ListTextProps>`
+const TableListText = styled.Text<ListProps>`
   font-family: ${({ theme }) => theme.TYPOGRAPHY.FONT_FAMILY};
   color: ${({ theme }) => theme.COLORS.BLACK_NEUTRAL};
   font-size: ${({ theme }) => theme.TYPOGRAPHY.H3.FONT_SIZE};
@@ -88,6 +92,12 @@ const TableViewIcon = styled.View`
   align-items: center;
 `;
 
+const StyledChevron = styled(ChevronComponent)`
+  transform: ${({ isRotating }) =>
+    isRotating ? "rotate(180deg)" : "rotate(0deg)"};
+  transition: transform 0.5s;
+`;
+
 export {
   TableContainer,
   TableHeaderContainer,
@@ -98,4 +108,5 @@ export {
   TableViewIcon,
   TableListDataContainer,
   TableListDataText,
+  StyledChevron,
 };

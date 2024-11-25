@@ -1,5 +1,4 @@
 import { useTheme } from "styled-components/native";
-import ChevronComponent from "../../../assets/svg/chevron";
 import CircleComponent from "../../../assets/svg/circle";
 import { AvatarComponent } from "../Avatar";
 import {
@@ -12,11 +11,16 @@ import {
   TableListText,
   TableViewIcon,
   TableListNames,
+  StyledChevron,
 } from "./styles";
 import { FlatList } from "react-native";
+import { useState } from "react";
 
 export function Table() {
   const { TYPOGRAPHY } = useTheme();
+  const [isOpenItems, setIsOpenItems] = useState<{ [key: number]: boolean }>(
+    {},
+  );
 
   const DATA = [
     {
@@ -103,6 +107,13 @@ export function Table() {
     return `+${ddi} (${ddd}) ${firstPart}-${secondPart}`;
   }
 
+  function handleAccordion(id: number) {
+    setIsOpenItems((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
+  }
+
   return (
     <TableContainer>
       <TableHeaderContainer>
@@ -118,7 +129,7 @@ export function Table() {
         data={DATA}
         renderItem={({ item }) => (
           <TableListContainer>
-            <TableListNames>
+            <TableListNames onPress={() => handleAccordion(item.id)}>
               <AvatarComponent flexGrow={0.02} size={34} source={item.image} />
               <TableListText
                 paddingLeft="24px"
@@ -127,10 +138,10 @@ export function Table() {
                 {item.name}
               </TableListText>
               <TableViewIcon>
-                <ChevronComponent />
+                <StyledChevron isRotating={isOpenItems[item.id]} />
               </TableViewIcon>
             </TableListNames>
-            <TableListDataContainer>
+            <TableListDataContainer display={isOpenItems[item.id]}>
               <TableListDataText
                 fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
                 fontSize={TYPOGRAPHY.H2.FONT_SIZE}
@@ -161,7 +172,7 @@ export function Table() {
             </TableListDataContainer>
           </TableListContainer>
         )}
-        keyExtractor={(item) => item.name}
+        keyExtractor={(item) => item.id.toString()}
       />
       {/* <TableListContainer>
         <TableListNames>
