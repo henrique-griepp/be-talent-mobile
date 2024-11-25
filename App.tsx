@@ -1,20 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { ThemeProvider } from "styled-components/native";
+import { theme } from "./src/theme";
+import { Home } from "./src/screens/Home";
+import { useFonts } from "expo-font";
+import { ActivityIndicator } from "react-native";
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Helvetica: require("./assets/fonts/Helvetica.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return <ActivityIndicator />;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeProvider theme={theme}>
+      <Home />
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
