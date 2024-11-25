@@ -94,6 +94,15 @@ export function Table() {
     return formatter.format(date);
   }
 
+  function formatPhone(phone: string) {
+    const ddi = phone.slice(0, 2);
+    const ddd = phone.slice(2, 4);
+    const firstPart = phone.slice(4, 9);
+    const secondPart = phone.slice(9);
+
+    return `+${ddi} (${ddd}) ${firstPart}-${secondPart}`;
+  }
+
   return (
     <TableContainer>
       <TableHeaderContainer>
@@ -147,7 +156,7 @@ export function Table() {
                 Telefone
               </TableListDataText>
               <TableListDataText textAlign="right">
-                {item.phone}
+                {formatPhone(item.phone)}
               </TableListDataText>
             </TableListDataContainer>
           </TableListContainer>
