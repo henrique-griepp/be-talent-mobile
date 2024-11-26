@@ -3,9 +3,9 @@ import { Text } from "react-native";
 
 const TeamSearchContainer = styled.View`
   width: auto;
-  margin-top: 28px;
-  padding-left: 20px;
-  padding-right: 20px;
+  margin-top: 24px;
+  margin-left: 20px;
+  margin-right: 20px;
 `;
 
 const TeamTitle = styled(Text)`

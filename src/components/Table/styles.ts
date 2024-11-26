@@ -13,8 +13,17 @@ export interface ListProps extends TextProps {
 
 const TableContainer = styled.View`
   flex: 1;
-  padding-left: 20px;
-  padding-right: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 24px;
+  margin-bottom: 10px;
+`;
+
+const TableViewBorder = styled.View`
+  flex-shrink: 1;
+  border-width: 1px;
+  border-radius: 8px;
+  border-color: ${({ theme }) => theme.COLORS.GRAY_10_NEUTRAL};
 `;
 
 const TableHeaderContainer = styled.View`
@@ -24,8 +33,7 @@ const TableHeaderContainer = styled.View`
   border-color: ${({ theme }) => theme.COLORS.GRAY_10_NEUTRAL};
   padding-left: 14px;
   padding-right: 14px;
-  border-width: 1px;
-  margin-top: 24px;
+  border-bottom-width: 1px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   align-items: center;
@@ -41,11 +49,8 @@ const TableHeaderText = styled.Text`
 `;
 
 const TableListContainer = styled.View`
-  border-width: 1px;
-  border-top-width: 0px;
   border-color: ${({ theme }) => theme.COLORS.GRAY_10_NEUTRAL};
-  padding-left: 14px;
-  padding-right: 14px;
+  border-top-width: 1px;
 `;
 
 const TableListNames = styled(TouchableOpacity)`
@@ -53,13 +58,18 @@ const TableListNames = styled(TouchableOpacity)`
   background-color: ${({ theme }) => theme.COLORS.WHITE_NEUTRAL};
   height: 60px;
   align-items: center;
+  margin-left: 14px;
+  margin-right: 14px;
 `;
 
 const TableListDataContainer = styled.View<ListProps>`
   flex-direction: row;
   flex-wrap: wrap;
+  background-color: ${({ theme }) => theme.COLORS.WHITE_NEUTRAL};
   width: auto;
   padding-bottom: 16px;
+  margin-left: 14px;
+  margin-right: 14px;
   display: ${({ display }) => (display ? "flex" : "none")};
 `;
 
@@ -111,4 +121,5 @@ export {
   TableListDataContainer,
   TableListDataText,
   StyledChevron,
+  TableViewBorder,
 };

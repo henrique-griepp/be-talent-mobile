@@ -12,6 +12,7 @@ import {
   TableViewIcon,
   TableListNames,
   StyledChevron,
+  TableViewBorder,
 } from "./styles";
 import { FlatList } from "react-native";
 import { useState } from "react";
@@ -148,70 +149,73 @@ export function Table() {
     <>
       <TeamSearchComponent onChangedInput={OnSearchInputChanged} />
       <TableContainer>
-        <TableHeaderContainer>
-          <TableHeaderText>Foto</TableHeaderText>
-          <TableHeaderText style={{ flexGrow: 1, textAlign: "left" }}>
-            Nome
-          </TableHeaderText>
-          <TableViewIcon>
-            <CircleComponent />
-          </TableViewIcon>
-        </TableHeaderContainer>
-        <FlatList
-          data={filteredData}
-          renderItem={({ item }) => (
-            <TableListContainer>
-              <TableListNames onPress={() => handleAccordion(item.id)}>
-                <AvatarComponent
-                  flexGrow={0.02}
-                  size={34}
-                  source={item.image}
-                />
-                <TableListText
-                  paddingLeft="24px"
-                  style={{ flexGrow: 1, textAlign: "left" }}
-                >
-                  {item.name}
-                </TableListText>
-                <TableViewIcon>
-                  <StyledChevron isRotating={isOpenItems[item.id]} />
-                </TableViewIcon>
-              </TableListNames>
-              <TableListDataContainer display={isOpenItems[item.id]}>
-                <TableListDataText
-                  fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
-                  fontSize={TYPOGRAPHY.H2.FONT_SIZE}
-                >
-                  Cargo
-                </TableListDataText>
-                <TableListDataText textAlign="right">
-                  {item.job}
-                </TableListDataText>
-                <TableListDataText
-                  fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
-                  fontSize={TYPOGRAPHY.H2.FONT_SIZE}
-                >
-                  Data de admissão
-                </TableListDataText>
-                <TableListDataText textAlign="right">
-                  {formatDate(item.admission_date)}
-                </TableListDataText>
-                <TableListDataText
-                  width="30%"
-                  fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
-                  fontSize={TYPOGRAPHY.H2.FONT_SIZE}
-                >
-                  Telefone
-                </TableListDataText>
-                <TableListDataText width="70%" textAlign="right">
-                  {formatPhone(item.phone)}
-                </TableListDataText>
-              </TableListDataContainer>
-            </TableListContainer>
-          )}
-          keyExtractor={(item) => item.id.toString()}
-        />
-        {/* <TableListContainer>
+        <TableViewBorder>
+          <TableHeaderContainer>
+            <TableHeaderText>Foto</TableHeaderText>
+            <TableHeaderText style={{ flexGrow: 1, textAlign: "left" }}>
+              Nome
+            </TableHeaderText>
+            <TableViewIcon>
+              <CircleComponent />
+            </TableViewIcon>
+          </TableHeaderContainer>
+          <FlatList
+            data={filteredData}
+            renderItem={({ item, index }) => (
+              <TableListContainer
+                style={{ borderTopWidth: index === 0 ? 0 : 1 }}
+              >
+                <TableListNames onPress={() => handleAccordion(item.id)}>
+                  <AvatarComponent
+                    flexGrow={0.02}
+                    size={34}
+                    source={item.image}
+                  />
+                  <TableListText
+                    paddingLeft="24px"
+                    style={{ flexGrow: 1, textAlign: "left" }}
+                  >
+                    {item.name}
+                  </TableListText>
+                  <TableViewIcon>
+                    <StyledChevron isRotating={isOpenItems[item.id]} />
+                  </TableViewIcon>
+                </TableListNames>
+                <TableListDataContainer display={isOpenItems[item.id]}>
+                  <TableListDataText
+                    fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
+                    fontSize={TYPOGRAPHY.H2.FONT_SIZE}
+                  >
+                    Cargo
+                  </TableListDataText>
+                  <TableListDataText textAlign="right">
+                    {item.job}
+                  </TableListDataText>
+                  <TableListDataText
+                    fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
+                    fontSize={TYPOGRAPHY.H2.FONT_SIZE}
+                  >
+                    Data de admissão
+                  </TableListDataText>
+                  <TableListDataText textAlign="right">
+                    {formatDate(item.admission_date)}
+                  </TableListDataText>
+                  <TableListDataText
+                    width="30%"
+                    fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
+                    fontSize={TYPOGRAPHY.H2.FONT_SIZE}
+                  >
+                    Telefone
+                  </TableListDataText>
+                  <TableListDataText width="70%" textAlign="right">
+                    {formatPhone(item.phone)}
+                  </TableListDataText>
+                </TableListDataContainer>
+              </TableListContainer>
+            )}
+            keyExtractor={(item) => item.id.toString()}
+          />
+          {/* <TableListContainer>
         <TableListNames>
           <AvatarComponent flexGrow={0.02} size={34} />
           <TableListText
@@ -248,7 +252,8 @@ export function Table() {
           <TableListDataText textAlign="right">texto4</TableListDataText>
         </TableListDataContainer>
       </TableListContainer> */}
-        {/* //TODO: remover  */}
+          {/* //TODO: remover  */}
+        </TableViewBorder>
       </TableContainer>
     </>
   );

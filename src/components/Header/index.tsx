@@ -1,4 +1,9 @@
-import { HeaderContainer } from "./styles";
+import {
+  BadgeText,
+  HeaderContainer,
+  NotificationBadge,
+  NotificationContainer,
+} from "./styles";
 import { AvatarComponent } from "../Avatar";
 import BellNotificationComponent from "../../../assets/svg/bell-notification 1";
 
@@ -7,7 +12,12 @@ export function Header() {
     <>
       <HeaderContainer>
         <AvatarComponent size={45} />
-        <BellNotificationComponent />
+        <NotificationContainer>
+          <BellNotificationComponent />
+          <NotificationBadge>
+            <BadgeText>2</BadgeText>
+          </NotificationBadge>
+        </NotificationContainer>
       </HeaderContainer>
     </>
   );

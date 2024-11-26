@@ -4,7 +4,7 @@
     "slug": "be-talent",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/img/logo-be.png",
+    "icon": "./assets/img/icon-be.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
