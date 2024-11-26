@@ -120,9 +120,29 @@ export function Table() {
     }));
   }
 
-  const filteredData = DATA.filter((item) =>
-    item.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()),
-  );
+  function normalizeString(str: string) {
+    return str
+      .toLocaleLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]/g, "");
+  }
+
+  const filteredData = DATA.filter((item) => {
+    const normalizedSearch = normalizeString(search);
+    const matchesJob = normalizeString(item.job)?.includes(normalizedSearch);
+    const matchesName = normalizeString(item.name)?.includes(normalizedSearch);
+    const matchesPhone = normalizeString(item.phone.toString())?.includes(
+      normalizedSearch,
+    );
+    if (matchesJob) {
+      return item;
+    } else if (matchesName) {
+      return item;
+    } else if (matchesPhone) {
+      return item;
+    }
+  });
 
   return (
     <>
@@ -177,12 +197,13 @@ export function Table() {
                   {formatDate(item.admission_date)}
                 </TableListDataText>
                 <TableListDataText
+                  width="30%"
                   fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
                   fontSize={TYPOGRAPHY.H2.FONT_SIZE}
                 >
                   Telefone
                 </TableListDataText>
-                <TableListDataText textAlign="right">
+                <TableListDataText width="70%" textAlign="right">
                   {formatPhone(item.phone)}
                 </TableListDataText>
               </TableListDataContainer>

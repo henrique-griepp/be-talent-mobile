@@ -8,6 +8,7 @@ export interface ListProps extends TextProps {
   textAlign?: "auto" | "left" | "right" | "center" | "justify";
   paddingLeft?: string;
   display?: boolean;
+  width?: string;
 }
 
 const TableContainer = styled.View`
@@ -18,12 +19,12 @@ const TableContainer = styled.View`
 
 const TableHeaderContainer = styled.View`
   flex-direction: row;
+  height: 48px;
   background-color: ${({ theme }) => theme.COLORS.BLUE_10};
+  border-color: ${({ theme }) => theme.COLORS.GRAY_10_NEUTRAL};
   padding-left: 14px;
   padding-right: 14px;
   border-width: 1px;
-  border-color: ${({ theme }) => theme.COLORS.GRAY_10_NEUTRAL};
-  height: 48px;
   margin-top: 24px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -33,9 +34,9 @@ const TableHeaderContainer = styled.View`
 const TableHeaderText = styled.Text`
   flex-grow: 0.02;
   font-family: ${({ theme }) => theme.TYPOGRAPHY.FONT_FAMILY};
-  color: ${({ theme }) => theme.COLORS.BLACK_NEUTRAL};
   font-size: ${({ theme }) => theme.TYPOGRAPHY.H2.FONT_SIZE};
   font-weight: ${({ theme }) => theme.TYPOGRAPHY.H2.FONT_WEIGHT};
+  color: ${({ theme }) => theme.COLORS.BLACK_NEUTRAL};
   padding-right: 24px;
 `;
 
@@ -63,25 +64,24 @@ const TableListDataContainer = styled.View<ListProps>`
 `;
 
 const TableListDataText = styled.Text<ListProps>`
-  width: 50%;
+  width: ${({ width }) => width || "50%"};
   font-family: ${({ theme }) => theme.TYPOGRAPHY.FONT_FAMILY};
-  color: ${({ theme }) => theme.COLORS.BLACK_NEUTRAL};
   font-size: ${({ theme }) => theme.TYPOGRAPHY.H3.FONT_SIZE};
   font-weight: ${({ fontWeight, theme }) =>
     fontWeight || theme.TYPOGRAPHY.H3.FONT_WEIGHT};
+  color: ${({ theme }) => theme.COLORS.BLACK_NEUTRAL};
   text-align: ${({ textAlign }) => textAlign || "left"};
   border-bottom-width: 1px;
   border-color: ${({ theme }) => theme.COLORS.GRAY_10_NEUTRAL};
   border-style: dashed;
   margin-bottom: 8px;
-  display: ${({ display }) => (display ? "none" : "flex")};
 `;
 
 const TableListText = styled.Text<ListProps>`
   font-family: ${({ theme }) => theme.TYPOGRAPHY.FONT_FAMILY};
-  color: ${({ theme }) => theme.COLORS.BLACK_NEUTRAL};
   font-size: ${({ theme }) => theme.TYPOGRAPHY.H3.FONT_SIZE};
   font-weight: ${({ theme }) => theme.TYPOGRAPHY.H3.FONT_WEIGHT};
+  color: ${({ theme }) => theme.COLORS.BLACK_NEUTRAL};
   padding-left: ${({ paddingLeft }) => paddingLeft || "16px"};
 `;
 
@@ -91,6 +91,8 @@ const TableViewIcon = styled.View`
   justify-content: center;
   align-items: center;
 `;
+
+//TODO verificar incompatibilidade isRotating
 
 const StyledChevron = styled(ChevronComponent)`
   transform: ${({ isRotating }) =>
