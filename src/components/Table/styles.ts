@@ -1,6 +1,5 @@
 import { TextProps, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
-import ChevronComponent from "../../../assets/svg/chevron";
 
 export interface ListProps extends TextProps {
   fontSize?: string;
@@ -26,13 +25,20 @@ const TableViewBorder = styled.View`
   border-color: ${({ theme }) => theme.COLORS.GRAY_10_NEUTRAL};
 `;
 
+const TableColumnImage = styled.View`
+  width: 34px;
+  justify-content: center;
+  align-items: left;
+  margin-right: 24px;
+`;
+
 const TableHeaderContainer = styled.View`
   flex-direction: row;
   height: 48px;
   background-color: ${({ theme }) => theme.COLORS.BLUE_10};
   border-color: ${({ theme }) => theme.COLORS.GRAY_10_NEUTRAL};
-  padding-left: 14px;
-  padding-right: 14px;
+  padding-left: 16px;
+  padding-right: 16px;
   border-bottom-width: 1px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -45,7 +51,6 @@ const TableHeaderText = styled.Text`
   font-size: ${({ theme }) => theme.TYPOGRAPHY.H2.FONT_SIZE};
   font-weight: ${({ theme }) => theme.TYPOGRAPHY.H2.FONT_WEIGHT};
   color: ${({ theme }) => theme.COLORS.BLACK_NEUTRAL};
-  padding-right: 24px;
 `;
 
 const TableListContainer = styled.View`
@@ -58,8 +63,8 @@ const TableListNames = styled(TouchableOpacity)`
   background-color: ${({ theme }) => theme.COLORS.WHITE_NEUTRAL};
   height: 60px;
   align-items: center;
-  margin-left: 14px;
-  margin-right: 14px;
+  margin-left: 16px;
+  margin-right: 16px;
 `;
 
 const TableListDataContainer = styled.View<ListProps>`
@@ -68,8 +73,8 @@ const TableListDataContainer = styled.View<ListProps>`
   background-color: ${({ theme }) => theme.COLORS.WHITE_NEUTRAL};
   width: auto;
   padding-bottom: 16px;
-  margin-left: 14px;
-  margin-right: 14px;
+  margin-left: 16px;
+  margin-right: 16px;
   display: ${({ display }) => (display ? "flex" : "none")};
 `;
 
@@ -92,7 +97,7 @@ const TableListText = styled.Text<ListProps>`
   font-size: ${({ theme }) => theme.TYPOGRAPHY.H3.FONT_SIZE};
   font-weight: ${({ theme }) => theme.TYPOGRAPHY.H3.FONT_WEIGHT};
   color: ${({ theme }) => theme.COLORS.BLACK_NEUTRAL};
-  padding-left: ${({ paddingLeft }) => paddingLeft || "16px"};
+  /* margin-left: ${({ paddingLeft }) => paddingLeft || "16px"}; */
 `;
 
 const TableViewIcon = styled.View`
@@ -100,14 +105,6 @@ const TableViewIcon = styled.View`
   height: 32px;
   justify-content: center;
   align-items: center;
-`;
-
-//TODO verificar incompatibilidade isRotating
-
-const StyledChevron = styled(ChevronComponent)`
-  transform: ${({ isRotating }) =>
-    isRotating ? "rotate(180deg)" : "rotate(0deg)"};
-  transition: transform 0.5s;
 `;
 
 export {
@@ -120,6 +117,6 @@ export {
   TableViewIcon,
   TableListDataContainer,
   TableListDataText,
-  StyledChevron,
   TableViewBorder,
+  TableColumnImage,
 };

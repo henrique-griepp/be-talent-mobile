@@ -6,9 +6,9 @@ interface AvatarInterface {
   flexGrow?: number;
   source?: string;
 }
-export function AvatarComponent({ size, flexGrow, source }: AvatarInterface) {
+export function AvatarComponent({ size, source }: AvatarInterface) {
   return (
-    <AvatarContainer style={{ width: size, height: size, flexGrow: flexGrow }}>
+    <AvatarContainer style={{ width: size, height: size }}>
       {source?.trim() === "" || source === undefined ? (
         <AvatarText>CG</AvatarText>
       ) : (

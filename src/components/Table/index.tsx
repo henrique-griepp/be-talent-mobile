@@ -11,12 +11,13 @@ import {
   TableListText,
   TableViewIcon,
   TableListNames,
-  StyledChevron,
   TableViewBorder,
+  TableColumnImage,
 } from "./styles";
 import { FlatList } from "react-native";
 import { useState } from "react";
 import { TeamSearchComponent } from "../TeamSearch";
+import { StyledChevron } from "../StyledChevron";
 
 export function Table() {
   const { TYPOGRAPHY } = useTheme();
@@ -151,7 +152,9 @@ export function Table() {
       <TableContainer>
         <TableViewBorder>
           <TableHeaderContainer>
-            <TableHeaderText>Foto</TableHeaderText>
+            <TableColumnImage>
+              <TableHeaderText>Foto</TableHeaderText>
+            </TableColumnImage>
             <TableHeaderText style={{ flexGrow: 1, textAlign: "left" }}>
               Nome
             </TableHeaderText>
@@ -166,13 +169,11 @@ export function Table() {
                 style={{ borderTopWidth: index === 0 ? 0 : 1 }}
               >
                 <TableListNames onPress={() => handleAccordion(item.id)}>
-                  <AvatarComponent
-                    flexGrow={0.02}
-                    size={34}
-                    source={item.image}
-                  />
+                  <TableColumnImage>
+                    <AvatarComponent size={34} source={item.image} />
+                  </TableColumnImage>
                   <TableListText
-                    paddingLeft="24px"
+                    // paddingLeft="24px"
                     style={{ flexGrow: 1, textAlign: "left" }}
                   >
                     {item.name}
@@ -192,12 +193,13 @@ export function Table() {
                     {item.job}
                   </TableListDataText>
                   <TableListDataText
+                    width="60%"
                     fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
                     fontSize={TYPOGRAPHY.H2.FONT_SIZE}
                   >
                     Data de admissão
                   </TableListDataText>
-                  <TableListDataText textAlign="right">
+                  <TableListDataText width="40%" textAlign="right">
                     {formatDate(item.admission_date)}
                   </TableListDataText>
                   <TableListDataText
