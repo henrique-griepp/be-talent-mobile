@@ -97,7 +97,6 @@ const TableListText = styled.Text<ListProps>`
   font-size: ${({ theme }) => theme.TYPOGRAPHY.H3.FONT_SIZE};
   font-weight: ${({ theme }) => theme.TYPOGRAPHY.H3.FONT_WEIGHT};
   color: ${({ theme }) => theme.COLORS.BLACK_NEUTRAL};
-  /* margin-left: ${({ paddingLeft }) => paddingLeft || "16px"}; */
 `;
 
 const TableViewIcon = styled.View`

@@ -14,11 +14,11 @@ import {
   TableViewBorder,
   TableColumnImage,
 } from "./styles";
-import { FlatList } from "react-native";
 import { useEffect, useState } from "react";
 import { TeamSearchComponent } from "../TeamSearch";
 import { StyledChevron } from "../StyledChevron";
 import { Employees, fetchData } from "../../utils/fetchData";
+import { FlatList } from "react-native";
 
 export function Table() {
   const { TYPOGRAPHY } = useTheme();
@@ -27,8 +27,9 @@ export function Table() {
   );
   const [search, setSearch] = useState("");
   const [employees, setEmployees] = useState<Employees[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  const url = "http://192.168.0.190:3000/employees"; // Certifique-se de que a URL está correta
+  const url = "http://seu_ip:3000/employees"; //Substitua pelo seu endereço IP da sua maquina(Nota: Caso necessário, altere a porta conforme fornecido no json-server)
 
   useEffect(() => {
     async function getEmployees() {
@@ -37,11 +38,19 @@ export function Table() {
         setEmployees(data);
       } catch (err) {
         console.error("Erro ao buscar os dados:", err);
+        setError("Não foi possível achar os dados.");
       }
     }
 
     getEmployees();
   }, []);
+
+  function handleAccordion(id: number) {
+    setIsOpenItems((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
+  }
 
   function formatDate(rawDate: string) {
     const date = new Date(rawDate);
@@ -64,13 +73,6 @@ export function Table() {
 
   function OnSearchInputChanged(searchText: string) {
     setSearch(searchText);
-  }
-
-  function handleAccordion(id: number) {
-    setIsOpenItems((prevState) => ({
-      ...prevState,
-      [id]: !prevState[id],
-    }));
   }
 
   function normalizeString(str: string) {
@@ -113,6 +115,11 @@ export function Table() {
               <CircleComponent />
             </TableViewIcon>
           </TableHeaderContainer>
+          {error && (
+            <TableListText style={{ width: "100%", textAlign: "center" }}>
+              {error}
+            </TableListText>
+          )}
           <FlatList
             data={filteredData}
             renderItem={({ item, index }) => (
@@ -165,44 +172,6 @@ export function Table() {
             )}
             keyExtractor={(item) => item.id.toString()}
           />
-          {/* <TableListContainer>
-        <TableListNames>
-          <AvatarComponent flexGrow={0.02} size={34} />
-          <TableListText
-            paddingLeft="24px"
-            style={{ flexGrow: 1, textAlign: "left" }}
-          >
-            Nome do funcionário
-          </TableListText>
-          <TableViewIcon>
-            <ChevronComponent />
-          </TableViewIcon>
-        </TableListNames>
-        <TableListDataContainer>
-          <TableListDataText
-            fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
-            fontSize={TYPOGRAPHY.H2.FONT_SIZE}
-          >
-            Cargo
-          </TableListDataText>
-          <TableListDataText textAlign="right">Cargo</TableListDataText>
-          <TableListDataText
-            fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
-            fontSize={TYPOGRAPHY.H2.FONT_SIZE}
-          >
-            Data de admissão
-          </TableListDataText>
-          <TableListDataText textAlign="right">texto4</TableListDataText>
-          <TableListDataText
-            fontWeight={TYPOGRAPHY.H2.FONT_WEIGHT}
-            fontSize={TYPOGRAPHY.H2.FONT_SIZE}
-          >
-            Telefone
-          </TableListDataText>
-          <TableListDataText textAlign="right">texto4</TableListDataText>
-        </TableListDataContainer>
-      </TableListContainer> */}
-          {/* //TODO: remover  */}
         </TableViewBorder>
       </TableContainer>
     </>

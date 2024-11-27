@@ -25,9 +25,12 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      ["expo-font",
+      [
+        "expo-font",
         {
-          "fonts": ["./assets/fonts/times.otf"]
+          "fonts": [
+            "./assets/fonts/Helvetica.ttf"
+          ]
         }
       ]
     ]
