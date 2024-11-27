@@ -15,9 +15,10 @@ import {
   TableColumnImage,
 } from "./styles";
 import { FlatList } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TeamSearchComponent } from "../TeamSearch";
 import { StyledChevron } from "../StyledChevron";
+import { Employees, fetchData } from "../../utils/fetchData";
 
 export function Table() {
   const { TYPOGRAPHY } = useTheme();
@@ -25,72 +26,22 @@ export function Table() {
     {},
   );
   const [search, setSearch] = useState("");
+  const [employees, setEmployees] = useState<Employees[]>([]);
 
-  const DATA = [
-    {
-      id: 1,
-      name: "João",
-      job: "Back-end",
-      admission_date: "2019-12-02T00:00:00.000Z",
-      phone: "5551234567890",
-      image:
-        "https://img.favpng.com/25/7/23/computer-icons-user-profile-avatar-image-png-favpng-LFqDyLRhe3PBXM0sx2LufsGFU.jpg",
-    },
-    {
-      id: 2,
-      name: "Roberto",
-      job: "Front-end",
-      admission_date: "2020-03-12T00:00:00.000Z",
-      phone: "5550321654789",
-      image:
-        "https://e7.pngegg.com/pngimages/550/997/png-clipart-user-icon-foreigners-avatar-child-face.png",
-    },
-    {
-      id: 3,
-      name: "Maria",
-      job: "Front-end",
-      admission_date: "2020-03-15T00:00:00.000Z",
-      phone: "5557894561230",
-      image:
-        "https://www.clipartmax.com/png/middle/277-2772117_user-profile-avatar-woman-icon-avatar-png-profile-icon.png",
-    },
-    {
-      id: 4,
-      name: "Cleber",
-      job: "Back-end",
-      admission_date: "2020-06-01T00:00:00.000Z",
-      phone: "5557410258963",
-      image:
-        "https://img.favpng.com/25/7/23/computer-icons-user-profile-avatar-image-png-favpng-LFqDyLRhe3PBXM0sx2LufsGFU.jpg",
-    },
-    {
-      id: 5,
-      name: "Giovana",
-      job: "Designer",
-      admission_date: "2020-06-20T00:00:00.000Z",
-      phone: "5553698520147",
-      image:
-        "https://www.clipartmax.com/png/middle/277-2772117_user-profile-avatar-woman-icon-avatar-png-profile-icon.png",
-    },
-    {
-      id: 6,
-      name: "Mario",
-      job: "Front-end",
-      admission_date: "2020-10-01T00:00:00.000Z",
-      phone: "5551234567890",
-      image:
-        "https://e7.pngegg.com/pngimages/550/997/png-clipart-user-icon-foreigners-avatar-child-face.png",
-    },
-    {
-      id: 7,
-      name: "Gabriel",
-      job: "Back-end",
-      admission_date: "2021-01-01T00:00:00.000Z",
-      phone: "5551234567890",
-      image:
-        "https://img.favpng.com/25/7/23/computer-icons-user-profile-avatar-image-png-favpng-LFqDyLRhe3PBXM0sx2LufsGFU.jpg",
-    },
-  ];
+  const url = "http://192.168.0.190:3000/employees"; // Certifique-se de que a URL está correta
+
+  useEffect(() => {
+    async function getEmployees() {
+      try {
+        const data = await fetchData(url);
+        setEmployees(data);
+      } catch (err) {
+        console.error("Erro ao buscar os dados:", err);
+      }
+    }
+
+    getEmployees();
+  }, []);
 
   function formatDate(rawDate: string) {
     const date = new Date(rawDate);
@@ -130,7 +81,7 @@ export function Table() {
       .replace(/[^a-z0-9]/g, "");
   }
 
-  const filteredData = DATA.filter((item) => {
+  const filteredData = employees.filter((item) => {
     const normalizedSearch = normalizeString(search);
     const matchesJob = normalizeString(item.job)?.includes(normalizedSearch);
     const matchesName = normalizeString(item.name)?.includes(normalizedSearch);
@@ -172,10 +123,7 @@ export function Table() {
                   <TableColumnImage>
                     <AvatarComponent size={34} source={item.image} />
                   </TableColumnImage>
-                  <TableListText
-                    // paddingLeft="24px"
-                    style={{ flexGrow: 1, textAlign: "left" }}
-                  >
+                  <TableListText style={{ flexGrow: 1, textAlign: "left" }}>
                     {item.name}
                   </TableListText>
                   <TableViewIcon>

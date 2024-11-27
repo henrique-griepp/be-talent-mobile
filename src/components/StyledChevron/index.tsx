@@ -3,9 +3,9 @@ import { Animated } from "react-native";
 import ChevronComponent from "../../../assets/svg/chevron";
 
 interface StyledChevronProps {
-  isRotating: boolean;
+  isRotating?: boolean;
 }
-export function StyledChevron({ isRotating }: StyledChevronProps) {
+export function StyledChevron({ isRotating = false }: StyledChevronProps) {
   const [rotation] = useState(new Animated.Value(0));
 
   useEffect(() => {
